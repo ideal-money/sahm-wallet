@@ -8,7 +8,8 @@ import {
   Text,
   View,
   Image,
-  Linking
+  Linking,
+  BackHandler
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { getKeyPair, shortAddress } from './utils';
@@ -50,7 +51,14 @@ class Verify extends Component {
     this.address = (await getKeyPair()).address.toLowerCase();
     this.setState({ address: this.address});
     this.waitForParent();
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => true
 
   async waitForProcess() {
     console.log('waitForProcess');
