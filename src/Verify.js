@@ -123,7 +123,7 @@ class Verify extends Component {
   }
 
   async waitForParent() {
-    const resp = await fetch(RELAYER_URL + '/parents/' + this.address);
+    const resp = await fetch(RELAYER_URL + '/parents/' + this.address + '?t=' + Date.now());
     const data = await resp.json();
     if (data.success) {
       this.setState({ parent: data.parent });
