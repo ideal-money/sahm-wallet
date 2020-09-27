@@ -43,14 +43,15 @@ class Send extends Component {
     this.setState({
       sending: true,
     });
-    const BN = web3.utils.BN;
-    const amount = new BN(this.state.amount * 10**18).toString();
+    const amount = parseInt(this.state.amount * 10**18).toString();
     const address = web3.utils.toChecksumAddress(this.state.address);
+
     const tx = await Sahm.methods.transfer(address, amount).send({
       from: web3.eth.defaultAccount,
       gas: GAS_LIMIT,
       gasPrice: GAS_PRICE
     });
+    console.log(tx);
     this.setState({
       sending: false,
       address: '',
